@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 10px;
+  height: 500px;
+  text-align: center;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+h1 {text-align: center;}
+</style>
+<script>
+  async function calculateProb() {
+    const start = document.getElementById('startingAirport2').value;
+    const end = document.getElementById('destination2').value;
+    response = await fetch(`/calcProbability?src=${start}&dest=${end}`, {
+      method: 'GET'
+    });
+    data = await response.text()
+    document.getElementById('div2').innerHTML=data;
+  }
+
+  async function basicAirportInfo() {
+    const startingAirport = document.getElementById('startingAirport1').value;
+    response = await fetch('/startingAirport?airport=' + startingAirport, {
+      method: 'GET'
+    });
+    data = await response.text()
+    document.getElementById('div1').innerHTML=data;
+  }
+
+  async function deleteFlight() {
+    const id = document.getElementById('flightId1').value;
+    response = await fetch('/deleteFlight?id=' + id, {
+      method: 'DELETE'
+    });
+    data = await response.text()
+    document.getElementById('div3').innerHTML=data;
+  }
+
+  async function updateFlight() {
+    const id = document.getElementById('flightId2').value;
+    const src = document.getElementById('src1').value;
+    const dest = document.getElementById('dest1').value;
+    response = await fetch(`/updateFlight?id=${id}&src=${src}&dest=${dest}`, {
+      method: 'PUT'
+    });
+    data = await response.text()
+    document.getElementById('div4').innerHTML=data;
+  }
+
+  async function insertFlight() {
+    const id = document.getElementById('flightId').value;
+    const src = document.getElementById('src').value;
+    const dest = document.getElementById('dest').value;
+    const off_by = document.getElementById('off_by').value;
+    const is_canc = document.getElementById('is_canc').value;
+    const month = document.getElementById('month').value;
+    const day = document.getElementById('day').value;
+    const dow = document.getElementById('dow').value;
+    const departure = document.getElementById('departure').value;
+
+    response = await fetch(`/insertFlight?id=${id}&src=${src}&dest=${dest}&off_by=${off_by}&is_canc=${is_canc}&month=${month}&day=${day}&dow=${dow}&departure=${departure}`, {
+      method: 'PUT'
+    });
+    data = await response.text()
+    document.getElementById('div5').innerHTML=data;
+  }
+</script>
+</head>
+<body>
+
+<h1>Flights and Cancellations</h1>
+
+<div class="row">
+  <div class="column" style="background-color:#c28282;">
+    <h2>Select Individual Airport</h2>
+    <p>
+        <input type="text" placeholder="Enter Starting Airport" required id="startingAirport1">
+        <button type="submit" required id="submit1" onclick="basicAirportInfo()">Submit</button>
+    </p>
+    <p id="div1"></p>
+  </div>
+  <div class="column" style="background-color:#a3c282;">
+    <h2>Calculate Delay/Cancellation Probabilty</h2>
+    <p>
+        <input type="text" placeholder="Enter Starting Airport" required id="startingAirport2">
+        <input type="text" placeholder="Enter Destination" required id="destination2">
+        <button type="submit" required id="submit2" onclick="calculateProb()">Submit</button>
+    </p>
+    <p id="div2"></p>
+  </div>
+  <div class="column" style="background-color:#b795c2;">
+    <h2>Delete Flight</h2>
+    <p>
+        <input type="text" placeholder="Enter Flight Id" required id="flightId1">
+        <button type="submit" id="submit3" onclick="deleteFlight()">Submit</button> 
+    </p>
+    <p id="div3"></p>
+    <h2>Update Flight</h2>
+    <p>
+        <input type="text" placeholder="Enter Flight Id" required id="flightId2">
+        <input type="text" placeholder="New SOURCE_AIRPORT" required id="src1">
+        <input type="text" placeholder="New DEST_AIRPORT" required id="dest1">
+        <button type="submit" id="submit4" onclick="updateFlight()">Submit</button> 
+    </p>
+    <p id="div4"></p>
+    <h2>Insert Flight</h2>
+    <p>
+        <input type="text" placeholder="Flight Id" required id="flightId">
+        <input type="text" placeholder="SOURCE_AIRPORT" required id="src">
+        <input type="text" placeholder="DEST_AIRPORT" required id="dest">
+        <input type="text" placeholder="OFFERED_BY" required id="off_by">
+        <input type="text" placeholder="IS_CANCELLED" required id="is_canc">
+        <input type="text" placeholder="MONTH" required id="month">
+        <input type="text" placeholder="DAY" required id="day">
+        <input type="text" placeholder="DAY_OF_WEEK" required id="dow">
+        <input type="text" placeholder="SCHEDULED_DEPARTURE" required id="departure">
+        <button type="submit" id="submit5" onclick="insertFlight()">Submit</button> 
+    </p>
+    <p id="div5"></p>
+  </div>
+</div>
+
+</body>
+</html>

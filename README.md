@@ -1,2 +1,2 @@
-# Flights-Calculations
-Project using MySQL and Pytho to visualize and calculate probability of cancelled or delayed flights
+# Team112-Delays/Cancellations
+This is the repository for team112 for CS 411: Database Systems Spring 2023
