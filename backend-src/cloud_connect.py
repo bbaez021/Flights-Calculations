@@ -5,11 +5,11 @@ import os
 import mysql.connector
 
 mydb = mysql.connector.connect(
-    host="34.69.30.140",
-    user="root",
-    password="team112db",
-    database="delayscancellations",
-    port=3306
+    host=None,
+    user=None,
+    password=None,
+    database=None,
+    port=None
 )
 
 def most_recent(src):
